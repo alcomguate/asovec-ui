@@ -3,16 +3,23 @@ import ModalComponent from "../../../shared/components/Modal";
 import UpdateInmueble from "../pages/InmuebleUpdatePage";
 import { BsHouse, BsPencilSquare, BsTrash, BsCashStack } from "react-icons/bs";
 import styles from "../styles/InmuebleList.module.css";
+import HistorialPagosModal from "../../pagos/components/HistorialPagosModal";
 
 const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
 
     const [selectedId, setSelectedId] = useState(null);
+    const [selectedInmuebleForPagos, setSelectedInmuebleForPagos] = useState(null);
     const [showModalUpdate, setShowModalUpdate] = useState(false);
+    const [showModalPagos, setShowModalPagos] = useState(false);
 
-    const handlePaymentModal = (id) => {
-        setSelectedId(id);
-        // TODO: Implement payment modal
-        console.log('Payment modal for inmueble:', id);
+    const handlePaymentModal = (inmueble) => {
+        setSelectedInmuebleForPagos(inmueble);
+        setShowModalPagos(true);
+    };
+
+    const handleCloseModalPagos = () => {
+        setSelectedInmuebleForPagos(null);
+        setShowModalPagos(false);
     };
 
     const handleOpenModalUpdate = (id) => {
@@ -61,6 +68,22 @@ const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
                 title="Editar"
             >
                 <UpdateInmueble id={selectedId} onClose={handleCloseModalUpdate} />
+            </ModalComponent>
+
+            {/* Modal de Pagos */}
+            <ModalComponent
+                show={showModalPagos}
+                onClose={handleCloseModalPagos}
+                title="Historial de Pagos"
+                size="lg"
+            >
+                {selectedInmuebleForPagos && (
+                    <HistorialPagosModal
+                        manzana={selectedInmuebleForPagos.manzana}
+                        lote={selectedInmuebleForPagos.lote}
+                        onClose={handleCloseModalPagos}
+                    />
+                )}
             </ModalComponent>
 
             {inmuebles.length === 0 ? (
@@ -114,7 +137,7 @@ const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
                                     </td>
                                     <td className={styles.tableCellCenter}>
                                         <button
-                                            onClick={() => handlePaymentModal(inmueble.id)}
+                                            onClick={() => handlePaymentModal(inmueble)}
                                             className={`${styles.actionButton} ${styles.paymentButton}`}
                                             title="Registrar pago"
                                         >
