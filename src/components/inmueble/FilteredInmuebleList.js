@@ -8,11 +8,11 @@ const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
 
     const [selectedId, setSelectedId] = useState(null);
     const [showModalUpdate, setShowModalUpdate] = useState(false);
-    const [showModalPayment, setShowModalPayment] = useState(false);
 
     const handlePaymentModal = (id) => {
         setSelectedId(id);
-        setShowModalPayment(true);
+        // TODO: Implement payment modal
+        console.log('Payment modal for inmueble:', id);
     };
 
     const handleOpenModalUpdate = (id) => {

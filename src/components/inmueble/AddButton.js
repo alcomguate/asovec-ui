@@ -1,9 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { BsPlusCircle } from "react-icons/bs";
 
 const AddButton = ({ onClick }) => {
-    const navigate = useNavigate();
 
     return (
         <button

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../services/api";
-import "bootstrap/dist/css/bootstrap.min.css"; // Importa los estilos de Bootstrap
+import "bootstrap/dist/css/bootstrap.min.css";
+import { toast } from 'react-toastify'; // Importa los estilos de Bootstrap
 
 const Update = ({ id, onClose }) => {
 
@@ -41,10 +42,10 @@ const Update = ({ id, onClose }) => {
         e.preventDefault();
         try {
             await axios.put('/v1/inmueble', formData);
-            alert("Datos actualizados con éxito");
+            toast.success('Datos actualizados con éxito');
             onClose();
         } catch (error) {
-            setError("Hubo un error al actualizar los datos")
+            toast.error('Hubo un error al actualizar los datos');
         }
     };
 

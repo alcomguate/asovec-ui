@@ -3,7 +3,6 @@ import axios from "../../services/api";
 import AddButton from "./AddButton";
 import ModalComponent from "../ModalComponent";
 import CreateInmueble from "./Create";
-import UpdateInmueble from "./Update";
 import FilteredInmuebleList from "./FilteredInmuebleList";
 import SearchBar from "./SearchBar";
 
@@ -14,11 +13,6 @@ const Read = () => {
     const [showModalCreate, setShowModalCreate] = useState(false);
     const [selectedManzana, setSelectedManzana] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
-
-    const handleSelectedManzana = (manzanaSelected) => {
-        fetchInmueblesByManzana(manzanaSelected);
-        setSelectedManzana(manzanaSelected);
-    }
 
     const handleSearchChange = (value) => {
         setSearchTerm(value);
@@ -34,7 +28,7 @@ const Read = () => {
     const fetchInmueblesByManzana = async (manzana) => {
         try {
             let url = "/v1/inmueble";
-            if (manzana != undefined) {
+            if (manzana !== undefined) {
                 url = "/v1/inmueble/manzana/" + manzana;
             }
             const response = await axios.get(url);

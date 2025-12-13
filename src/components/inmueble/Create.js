@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "../../services/api";
 import { useNavigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css"; // Importa los estilos de Bootstrap
+import "bootstrap/dist/css/bootstrap.min.css";
+import { toast } from 'react-toastify'; // Importa los estilos de Bootstrap
 
 const Create = () => {
   const [formData, setFormData] = useState({
@@ -25,11 +26,11 @@ const Create = () => {
     e.preventDefault();
     try {
       await axios.post("/v1/inmueble", formData);
-      alert("Registro creado con éxito");
+      toast.success('Registro creado con éxito');
       navigate("/inmueble");
     } catch (error) {
       console.error("Error al crear el registro: ", error);
-      alert("Hubo un problema al crear el registro");
+      toast.error('Hubo un problema al crear el registro');
     }
   };
 
