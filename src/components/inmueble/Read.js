@@ -65,33 +65,124 @@ const Read = () => {
     });
 
     if (loading) {
-        return <div>Cargando datos...</div>;
+        return (
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "400px"
+            }}>
+                <div style={{
+                    background: "white",
+                    borderRadius: "16px",
+                    padding: "40px 60px",
+                    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                    textAlign: "center"
+                }}>
+                    <div style={{
+                        width: "60px",
+                        height: "60px",
+                        border: "4px solid #f3f4f6",
+                        borderTop: "4px solid #667eea",
+                        borderRadius: "50%",
+                        animation: "spin 1s linear infinite",
+                        margin: "0 auto 20px"
+                    }}></div>
+                    <p style={{
+                        fontSize: "18px",
+                        color: "#6b7280",
+                        fontWeight: "500",
+                        margin: 0
+                    }}>
+                        Cargando datos...
+                    </p>
+                </div>
+                <style>{`
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                `}</style>
+            </div>
+        );
     }
 
     if (error) {
-        return <div>{error}</div>;
+        return (
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "400px"
+            }}>
+                <div style={{
+                    background: "white",
+                    borderRadius: "16px",
+                    padding: "40px 60px",
+                    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                    textAlign: "center",
+                    maxWidth: "500px"
+                }}>
+                    <div style={{
+                        fontSize: "64px",
+                        marginBottom: "20px"
+                    }}>⚠️</div>
+                    <p style={{
+                        fontSize: "18px",
+                        color: "#ef4444",
+                        fontWeight: "600",
+                        margin: 0
+                    }}>
+                        {error}
+                    </p>
+                </div>
+            </div>
+        );
     }
 
     return (
-        <div>
-
-
-            <h2>Lista de Inmuebles</h2>
-
-            <div className="my-3">
-                <SearchBar
-                    searchTerm={searchTerm}
-                    onSearchChange={handleSearchChange}
-                />
+        <div style={{ padding: "20px" }}>
+            {/* Page Title */}
+            <div style={{
+                marginBottom: "30px",
+                textAlign: "center"
+            }}>
+                <h2 style={{
+                    fontSize: "32px",
+                    fontWeight: "700",
+                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    marginBottom: "10px"
+                }}>
+                    🏘️ Lista de Inmuebles
+                </h2>
+                <p style={{
+                    color: "#6b7280",
+                    fontSize: "16px",
+                    margin: 0
+                }}>
+                    Gestiona y busca inmuebles registrados
+                </p>
             </div>
 
-            <div class="container px-4 text-center">
-                <div class="row gx-5">
-                    <div class="col">
-                        <div class="p-3">
-                            <AddButton onClick={handleOpenModalCreate} />
-                        </div>
-                    </div>
+            {/* Search and Add Section */}
+            <div style={{
+                display: "flex",
+                gap: "20px",
+                alignItems: "center",
+                marginBottom: "20px",
+                flexWrap: "wrap"
+            }}>
+                <div style={{ flex: "1", minWidth: "300px" }}>
+                    <SearchBar
+                        searchTerm={searchTerm}
+                        onSearchChange={handleSearchChange}
+                    />
+                </div>
+                <div>
+                    <AddButton onClick={handleOpenModalCreate} />
                 </div>
             </div>
 
