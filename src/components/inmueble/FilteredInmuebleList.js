@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import ModalComponent from "../ModalComponent";
 import UpdateInmueble from "./Update";
+import { BsHouse, BsPencilSquare, BsTrash, BsCashStack } from "react-icons/bs";
+import styles from "./FilteredInmuebleList.module.css";
 
 const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
 
     const [selectedId, setSelectedId] = useState(null);
     const [showModalUpdate, setShowModalUpdate] = useState(false);
+    const [showModalPayment, setShowModalPayment] = useState(false);
+
+    const handlePaymentModal = (id) => {
+        setSelectedId(id);
+        setShowModalPayment(true);
+    };
 
     const handleOpenModalUpdate = (id) => {
         setSelectedId(id);
@@ -31,46 +39,18 @@ const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
     };
 
     return (
-        <div style={{ marginTop: "30px" }}>
+        <div className={styles.container}>
             {/* Header Section */}
-            <div style={{
-                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                borderRadius: "16px",
-                padding: "24px 32px",
-                marginBottom: "24px",
-                boxShadow: "0 8px 24px rgba(102, 126, 234, 0.25)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between"
-            }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    <div style={{
-                        background: "rgba(255, 255, 255, 0.2)",
-                        borderRadius: "12px",
-                        padding: "12px",
-                        backdropFilter: "blur(10px)"
-                    }}>
-                        <svg width="24" height="24" fill="white" viewBox="0 0 16 16">
-                            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z" />
-                        </svg>
+            <div className={styles.header}>
+                <div className={styles.headerContent}>
+                    <div className={styles.iconContainer}>
+                        <BsHouse size={24} color="white" />
                     </div>
-                    <h1 style={{
-                        color: "white",
-                        margin: 0,
-                        fontSize: "26px",
-                        fontWeight: "700"
-                    }}>
+                    <h1 className={styles.headerTitle}>
                         {getHeading()}
                     </h1>
                 </div>
-                <div style={{
-                    background: "rgba(255, 255, 255, 0.25)",
-                    borderRadius: "20px",
-                    padding: "8px 20px",
-                    color: "white",
-                    fontWeight: "600",
-                    fontSize: "14px"
-                }}>
+                <div className={styles.badge}>
                     {inmuebles.length} {inmuebles.length === 1 ? 'inmueble' : 'inmuebles'}
                 </div>
             </div>
@@ -84,26 +64,11 @@ const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
             </ModalComponent>
 
             {inmuebles.length === 0 ? (
-                <div style={{
-                    background: "white",
-                    borderRadius: "16px",
-                    padding: "60px 40px",
-                    textAlign: "center",
-                    boxShadow: "0 2px 20px rgba(0, 0, 0, 0.08)"
-                }}>
-                    <div style={{
-                        fontSize: "64px",
-                        marginBottom: "20px",
-                        opacity: "0.3"
-                    }}>
+                <div className={styles.emptyState}>
+                    <div className={styles.emptyIcon}>
                         🏘️
                     </div>
-                    <p style={{
-                        fontSize: "18px",
-                        color: "#6b7280",
-                        margin: 0,
-                        fontWeight: "500"
-                    }}>
+                    <p className={styles.emptyMessage}>
                         {searchTerm
                             ? `No se encontraron inmuebles que coincidan con "${searchTerm}".`
                             : "No se encontraron inmuebles."
@@ -111,174 +76,62 @@ const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
                     </p>
                 </div>
             ) : (
-                <div style={{
-                    background: "white",
-                    borderRadius: "16px",
-                    overflow: "hidden",
-                    boxShadow: "0 2px 20px rgba(0, 0, 0, 0.08)"
-                }}>
-                    <table className="table table-hover" style={{
-                        margin: 0,
-                        borderCollapse: "separate",
-                        borderSpacing: 0
-                    }}>
+                <div className={styles.tableContainer}>
+                    <table className={`table table-hover ${styles.table}`}>
                         <thead>
-                            <tr style={{
-                                background: "#f9fafb",
-                                borderBottom: "2px solid #e5e7eb"
-                            }}>
-                                <th scope="col" style={{
-                                    padding: "16px 24px",
-                                    fontWeight: "700",
-                                    fontSize: "13px",
-                                    color: "#374151",
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.5px"
-                                }}>
+                            <tr className={styles.tableHeader}>
+                                <th scope="col" className={styles.tableHeaderCell}>
                                     Manzana
                                 </th>
-                                <th scope="col" style={{
-                                    padding: "16px 24px",
-                                    fontWeight: "700",
-                                    fontSize: "13px",
-                                    color: "#374151",
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.5px"
-                                }}>
+                                <th scope="col" className={styles.tableHeaderCell}>
                                     Lote
                                 </th>
-                                <th scope="col" style={{
-                                    padding: "16px 24px",
-                                    fontWeight: "700",
-                                    fontSize: "13px",
-                                    color: "#374151",
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.5px"
-                                }}>
+                                <th scope="col" className={styles.tableHeaderCell}>
                                     Dirección
                                 </th>
-                                <th scope="col" style={{
-                                    padding: "16px 24px",
-                                    fontWeight: "700",
-                                    fontSize: "13px",
-                                    color: "#374151",
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.5px"
-                                }}>
+                                <th scope="col" className={styles.tableHeaderCell}>
                                     Titular
                                 </th>
-                                <th scope="col" style={{
-                                    padding: "16px 24px",
-                                    fontWeight: "700",
-                                    fontSize: "13px",
-                                    color: "#374151",
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.5px",
-                                    textAlign: "center"
-                                }}>
+                                <th scope="col" className={styles.tableHeaderCellCenter}>
                                     Acciones
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             {inmuebles.map((inmueble, index) => (
-                                <tr key={inmueble.id || index} style={{
-                                    borderBottom: index < inmuebles.length - 1 ? "1px solid #f3f4f6" : "none",
-                                    transition: "background-color 0.2s ease"
-                                }}>
-                                    <td style={{
-                                        padding: "20px 24px",
-                                        fontSize: "15px",
-                                        color: "#1f2937",
-                                        fontWeight: "600"
-                                    }}>
-                                        <span style={{
-                                            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                                            color: "white",
-                                            padding: "6px 12px",
-                                            borderRadius: "8px",
-                                            fontSize: "14px",
-                                            fontWeight: "700"
-                                        }}>
-                                            {inmueble.manzana}
-                                        </span>
+                                <tr key={inmueble.id || index} className={styles.tableRow}>
+                                    <td className={styles.tableCell}>
+                                        {inmueble.manzana}
                                     </td>
-                                    <td style={{
-                                        padding: "20px 24px",
-                                        fontSize: "15px",
-                                        color: "#1f2937",
-                                        fontWeight: "500"
-                                    }}>
+                                    <td className={styles.tableCellRegular}>
                                         {inmueble.lote}
                                     </td>
-                                    <td style={{
-                                        padding: "20px 24px",
-                                        fontSize: "15px",
-                                        color: "#4b5563"
-                                    }}>
+                                    <td className={styles.tableCellLight}>
                                         {inmueble.direccion}
                                     </td>
-                                    <td style={{
-                                        padding: "20px 24px",
-                                        fontSize: "15px",
-                                        color: "#4b5563"
-                                    }}>
+                                    <td className={styles.tableCellLight}>
                                         {inmueble.nombreTitular}
                                     </td>
-                                    <td style={{
-                                        padding: "20px 24px",
-                                        textAlign: "center"
-                                    }}>
+                                    <td className={styles.tableCellCenter}>
                                         <button
-                                            onClick={() => handleOpenModalUpdate(inmueble.id)}
-                                            style={{
-                                                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                                                border: "none",
-                                                borderRadius: "8px",
-                                                padding: "8px 12px",
-                                                cursor: "pointer",
-                                                marginRight: "8px",
-                                                transition: "all 0.2s ease",
-                                                boxShadow: "0 2px 8px rgba(102, 126, 234, 0.2)"
-                                            }}
-                                            onMouseOver={(e) => {
-                                                e.currentTarget.style.transform = "translateY(-2px)";
-                                                e.currentTarget.style.boxShadow = "0 4px 12px rgba(102, 126, 234, 0.3)";
-                                            }}
-                                            onMouseOut={(e) => {
-                                                e.currentTarget.style.transform = "translateY(0)";
-                                                e.currentTarget.style.boxShadow = "0 2px 8px rgba(102, 126, 234, 0.2)";
-                                            }}
-                                            title="Editar"
+                                            onClick={() => handlePaymentModal(inmueble.id)}
+                                            className={`${styles.actionButton} ${styles.paymentButton}`}
+                                            title="Registrar pago"
                                         >
-                                            <svg width="16" height="16" fill="white" viewBox="0 0 16 16">
-                                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                            </svg>
+                                            <BsCashStack size={16} color="white" />
                                         </button>
                                         <button
-                                            style={{
-                                                background: "linear-gradient(135deg, #f87171 0%, #dc2626 100%)",
-                                                border: "none",
-                                                borderRadius: "8px",
-                                                padding: "8px 12px",
-                                                cursor: "pointer",
-                                                transition: "all 0.2s ease",
-                                                boxShadow: "0 2px 8px rgba(248, 113, 113, 0.2)"
-                                            }}
-                                            onMouseOver={(e) => {
-                                                e.currentTarget.style.transform = "translateY(-2px)";
-                                                e.currentTarget.style.boxShadow = "0 4px 12px rgba(248, 113, 113, 0.3)";
-                                            }}
-                                            onMouseOut={(e) => {
-                                                e.currentTarget.style.transform = "translateY(0)";
-                                                e.currentTarget.style.boxShadow = "0 2px 8px rgba(248, 113, 113, 0.2)";
-                                            }}
+                                            onClick={() => handleOpenModalUpdate(inmueble.id)}
+                                            className={`${styles.actionButton} ${styles.editButton}`}
+                                            title="Editar"
+                                        >
+                                            <BsPencilSquare size={16} color="white" />
+                                        </button>
+                                        <button
+                                            className={`${styles.actionButton} ${styles.deleteButton}`}
                                             title="Eliminar"
                                         >
-                                            <svg width="16" height="16" fill="white" viewBox="0 0 16 16">
-                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                            </svg>
+                                            <BsTrash size={16} color="white" />
                                         </button>
                                     </td>
                                 </tr>

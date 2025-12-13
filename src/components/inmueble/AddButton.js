@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { BsPlusCircle } from "react-icons/bs";
 
 const AddButton = ({ onClick }) => {
     const navigate = useNavigate();
@@ -32,9 +33,7 @@ const AddButton = ({ onClick }) => {
                 e.currentTarget.style.boxShadow = "0 4px 15px rgba(16, 185, 129, 0.3)";
             }}
         >
-            <svg width="20" height="20" fill="white" viewBox="0 0 16 16">
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-            </svg>
+            <BsPlusCircle size={20} />
             Agregar Nuevo Inmueble
         </button>
     );
