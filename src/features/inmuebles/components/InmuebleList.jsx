@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import ModalComponent from "../ModalComponent";
-import UpdateInmueble from "./Update";
+import ModalComponent from "../../../shared/components/Modal";
+import UpdateInmueble from "../pages/InmuebleUpdatePage";
 import { BsHouse, BsPencilSquare, BsTrash, BsCashStack } from "react-icons/bs";
-import styles from "./FilteredInmuebleList.module.css";
+import styles from "../styles/InmuebleList.module.css";
 
 const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
 

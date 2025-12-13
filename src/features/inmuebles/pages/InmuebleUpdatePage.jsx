@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../services/api";
+import axios from "../../../services/api";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { toast } from 'react-toastify'; // Importa los estilos de Bootstrap
 

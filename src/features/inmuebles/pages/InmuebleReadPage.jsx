@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../services/api";
-import AddButton from "./AddButton";
-import ModalComponent from "../ModalComponent";
-import CreateInmueble from "./Create";
-import FilteredInmuebleList from "./FilteredInmuebleList";
-import SearchBar from "./SearchBar";
+import axios from "../../../services/api";
+import AddButton from "../components/AddInmuebleBtn";
+import ModalComponent from "../../../shared/components/Modal";
+import CreateInmueble from "./InmuebleCreatePage";
+import FilteredInmuebleList from "../components/InmuebleList";
+import SearchBar from "../components/InmuebleSearch";
 
 const Read = () => {
     const [inmuebles, setInmuebles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showModalCreate, setShowModalCreate] = useState(false);
-    const [selectedManzana, setSelectedManzana] = useState("");
+    const [selectedManzana] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
 
     const handleSearchChange = (value) => {
