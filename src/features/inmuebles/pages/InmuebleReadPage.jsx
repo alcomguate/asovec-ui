@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
-import axios from "../../../services/api";
+import React, { useState } from "react";
+import { useInmuebles } from "../hooks/useInmuebles";
 import AddButton from "../components/AddInmuebleBtn";
 import ModalComponent from "../../../shared/components/Modal";
 import CreateInmueble from "./InmuebleCreatePage";
 import FilteredInmuebleList from "../components/InmuebleList";
 import SearchBar from "../components/InmuebleSearch";
+import styles from "../styles/InmuebleReadPage.module.css";
 
 const Read = () => {
-    const [inmuebles, setInmuebles] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const { inmuebles, loading, error, refreshInmuebles } = useInmuebles();
     const [showModalCreate, setShowModalCreate] = useState(false);
     const [selectedManzana] = useState("");
     const [searchTerm, setSearchTerm] = useState("");
@@ -22,28 +21,8 @@ const Read = () => {
 
     const handleCloseModalCreate = () => {
         setShowModalCreate(false);
-        fetchInmueblesByManzana();
+        refreshInmuebles();
     };
-
-    const fetchInmueblesByManzana = async (manzana) => {
-        try {
-            let url = "/v1/inmueble";
-            if (manzana !== undefined) {
-                url = "/v1/inmueble/manzana/" + manzana;
-            }
-            const response = await axios.get(url);
-            setInmuebles(response.data);
-            console.log(response.data);
-            setLoading(false);
-        } catch (err) {
-            setError("Hubo un error al cargar los datos");
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchInmueblesByManzana();
-    }, []);
 
     // Filter inmuebles based on search term
     const filteredInmuebles = inmuebles.filter((inmueble) => {
@@ -60,73 +39,23 @@ const Read = () => {
 
     if (loading) {
         return (
-            <div style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                minHeight: "400px"
-            }}>
-                <div style={{
-                    background: "white",
-                    borderRadius: "16px",
-                    padding: "40px 60px",
-                    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                    textAlign: "center"
-                }}>
-                    <div style={{
-                        width: "60px",
-                        height: "60px",
-                        border: "4px solid #f3f4f6",
-                        borderTop: "4px solid #667eea",
-                        borderRadius: "50%",
-                        animation: "spin 1s linear infinite",
-                        margin: "0 auto 20px"
-                    }}></div>
-                    <p style={{
-                        fontSize: "18px",
-                        color: "#6b7280",
-                        fontWeight: "500",
-                        margin: 0
-                    }}>
+            <div className={styles.centerContainer}>
+                <div className={styles.loadingCard}>
+                    <div className={styles.spinner}></div>
+                    <p className={styles.loadingText}>
                         Cargando datos...
                     </p>
                 </div>
-                <style>{`
-                    @keyframes spin {
-                        0% { transform: rotate(0deg); }
-                        100% { transform: rotate(360deg); }
-                    }
-                `}</style>
             </div>
         );
     }
 
     if (error) {
         return (
-            <div style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                minHeight: "400px"
-            }}>
-                <div style={{
-                    background: "white",
-                    borderRadius: "16px",
-                    padding: "40px 60px",
-                    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                    textAlign: "center",
-                    maxWidth: "500px"
-                }}>
-                    <div style={{
-                        fontSize: "64px",
-                        marginBottom: "20px"
-                    }}>⚠️</div>
-                    <p style={{
-                        fontSize: "18px",
-                        color: "#ef4444",
-                        fontWeight: "600",
-                        margin: 0
-                    }}>
+            <div className={styles.centerContainer}>
+                <div className={styles.errorCard}>
+                    <div className={styles.errorIcon}>⚠️</div>
+                    <p className={styles.errorText}>
                         {error}
                     </p>
                 </div>
@@ -135,41 +64,20 @@ const Read = () => {
     }
 
     return (
-        <div style={{ padding: "20px" }}>
+        <div className={styles.pageContainer}>
             {/* Page Title */}
-            <div style={{
-                marginBottom: "30px",
-                textAlign: "center"
-            }}>
-                <h2 style={{
-                    fontSize: "32px",
-                    fontWeight: "700",
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    marginBottom: "10px"
-                }}>
+            <div className={styles.titleContainer}>
+                <h2 className={styles.pageTitle}>
                     🏘️ Lista de Inmuebles
                 </h2>
-                <p style={{
-                    color: "#6b7280",
-                    fontSize: "16px",
-                    margin: 0
-                }}>
+                <p className={styles.pageSubtitle}>
                     Gestiona y busca inmuebles registrados
                 </p>
             </div>
 
             {/* Search and Add Section */}
-            <div style={{
-                display: "flex",
-                gap: "20px",
-                alignItems: "center",
-                marginBottom: "20px",
-                flexWrap: "wrap"
-            }}>
-                <div style={{ flex: "1", minWidth: "300px" }}>
+            <div className={styles.controlsContainer}>
+                <div className={styles.searchWrapper}>
                     <SearchBar
                         searchTerm={searchTerm}
                         onSearchChange={handleSearchChange}

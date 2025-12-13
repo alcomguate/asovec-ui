@@ -1,0 +1,100 @@
+.pageContainer {
+    padding: 20px;
+}
+
+.centerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.loadingCard {
+    background: white;
+    border-radius: 16px;
+    padding: 40px 60px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #f3f4f6;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.loadingText {
+    font-size: 18px;
+    color: #6b7280;
+    font-weight: 500;
+    margin: 0;
+}
+
+.errorCard {
+    background: white;
+    border-radius: 16px;
+    padding: 40px 60px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+}
+
+.errorIcon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.errorText {
+    font-size: 18px;
+    color: #ef4444;
+    font-weight: 600;
+    margin: 0;
+}
+
+.titleContainer {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.pageTitle {
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+.pageSubtitle {
+    color: #6b7280;
+    font-size: 16px;
+    margin: 0;
+}
+
+.controlsContainer {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.searchWrapper {
+    flex: 1;
+    min-width: 300px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

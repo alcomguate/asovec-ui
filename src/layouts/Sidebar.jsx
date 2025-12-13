@@ -1,6 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AppIcon from "../AppIcon";
+import styles from "./Sidebar.module.css";
 
 const Sidebar = () => {
 
@@ -8,15 +9,7 @@ const Sidebar = () => {
         <div className="d-flex">
             {/* Contenedor del menú lateral */}
             <div
-                className="bg-light border"
-                style={{
-                    width: "250px",
-                    height: "100vh",
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    overflowY: "auto",
-                }}
+                className={`bg-light border ${styles.sidebar}`}
             >
                 <AppIcon
                     iconSrc="https://via.placeholder.com/150" // URL o ruta local del ícono
