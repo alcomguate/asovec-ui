@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { inmuebleService } from "../services/inmuebleService";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { toast } from 'react-toastify'; // Importa los estilos de Bootstrap
+import { toast } from 'react-toastify';
 import styles from "../styles/InmuebleForm.module.css";
 
 const Update = ({ id, onClose }) => {
@@ -11,7 +11,8 @@ const Update = ({ id, onClose }) => {
         manzana: "",
         lote: "",
         direccion: "",
-        nombreTitular: ""
+        nombreTitular: "",
+        nit: ""
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,10 +21,10 @@ const Update = ({ id, onClose }) => {
         const fetchInmueble = async () => {
             try {
                 const data = await inmuebleService.getById(id);
-                setFormData(data);
+                setFormData(prev => ({ ...prev, ...data }));
                 setLoading(false);
             } catch (error) {
-                setError("No su pudó cargar los datos");
+                setError("No se pudo cargar los datos");
                 setLoading(false);
             }
         };
@@ -51,11 +52,17 @@ const Update = ({ id, onClose }) => {
     };
 
     if (loading) {
-        return <div>Cargando datos...</div>;
+        return (
+            <div className="text-center p-5">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+        );
     }
 
     if (error) {
-        return <div>{error}</div>;
+        return <div className="alert alert-danger m-4">{error}</div>;
     }
 
     return (
@@ -64,88 +71,129 @@ const Update = ({ id, onClose }) => {
                 <h3 className={styles.formTitle}>
                     📝 Actualizar Inmueble
                 </h3>
+                <p className={styles.formSubtitle}>Edite la información del inmueble seleccionado</p>
             </div>
 
             <form onSubmit={handleSubmit} className={styles.formCard}>
-                <div className="mb-4">
-                    <label
-                        htmlFor="manzanaInput"
-                        className={styles.formLabel}
-                    >
-                        Manzana
-                    </label>
-                    <input
-                        id="manzanaInput"
-                        className={`form-control ${styles.formInput}`}
-                        type="text"
-                        name="manzana"
-                        value={formData.manzana}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                <div className={styles.formGrid}>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="manzanaInput" className={styles.formLabel}>
+                            Manzana
+                        </label>
+                        <input
+                            id="manzanaInput"
+                            className={styles.formInput}
+                            type="text"
+                            name="manzana"
+                            value={formData.manzana}
+                            onChange={handleChange}
+                            required
+                            placeholder="Ej. A"
+                        />
+                    </div>
 
-                <div className="mb-4">
-                    <label
-                        htmlFor="loteInput"
-                        className={styles.formLabel}
-                    >
-                        Lote
-                    </label>
-                    <input
-                        id="loteInput"
-                        className={`form-control ${styles.formInput}`}
-                        type="text"
-                        name="lote"
-                        value={formData.lote}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="loteInput" className={styles.formLabel}>
+                            Lote
+                        </label>
+                        <input
+                            id="loteInput"
+                            className={styles.formInput}
+                            type="text"
+                            name="lote"
+                            value={formData.lote}
+                            onChange={handleChange}
+                            required
+                            placeholder="Ej. 10"
+                        />
+                    </div>
 
-                <div className="mb-4">
-                    <label
-                        htmlFor="direccionInput"
-                        className={styles.formLabel}
-                    >
-                        Dirección
-                    </label>
-                    <input
-                        id="direccionInput"
-                        className={`form-control ${styles.formInput}`}
-                        type="text"
-                        name="direccion"
-                        value={formData.direccion}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                    <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+                        <label htmlFor="direccionInput" className={styles.formLabel}>
+                            Dirección
+                        </label>
+                        <input
+                            id="direccionInput"
+                            className={styles.formInput}
+                            type="text"
+                            name="direccion"
+                            value={formData.direccion}
+                            onChange={handleChange}
+                            required
+                            placeholder="Dirección completa"
+                        />
+                    </div>
 
-                <div className="mb-4">
-                    <label
-                        htmlFor="nombreTitularInput"
-                        className={styles.formLabel}
-                    >
-                        Titular
-                    </label>
-                    <input
-                        id="nombreTitularInput"
-                        className={`form-control ${styles.formInput}`}
-                        type="text"
-                        name="nombreTitular"
-                        value={formData.nombreTitular}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="nombreTitularInput" className={styles.formLabel}>
+                            Titular
+                        </label>
+                        <input
+                            id="nombreTitularInput"
+                            className={styles.formInput}
+                            type="text"
+                            name="nombreTitular"
+                            value={formData.nombreTitular}
+                            onChange={handleChange}
+                            required
+                            placeholder="Nombre del propietario"
+                        />
+                    </div>
 
-                <div className={styles.submitButtonContainer}>
-                    <button
-                        className={`btn btn-primary w-100 ${styles.submitButton}`}
-                        type="submit"
-                    >
-                        ✓ Guardar Cambios
-                    </button>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="nitInput" className={styles.formLabel}>
+                            NIT
+                        </label>
+                        <input
+                            id="nitInput"
+                            className={styles.formInput}
+                            type="text"
+                            name="nit"
+                            value={formData.nit || ""}
+                            onChange={handleChange}
+                            required
+                            placeholder="Número de NIT"
+                        />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label htmlFor="telefonoInput" className={styles.formLabel}>
+                            Teléfono
+                        </label>
+                        <input
+                            id="telefonoInput"
+                            className={styles.formInput}
+                            type="text"
+                            name="telefono"
+                            value={formData.telefono || ""}
+                            onChange={handleChange}
+                            placeholder="Número de teléfono"
+                        />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label htmlFor="observacionesInput" className={styles.formLabel}>
+                            Observaciones
+                        </label>
+                        <textarea
+                            id="observacionesInput"
+                            rows={4}
+                            className={styles.formInput}
+                            name="observaciones"
+                            value={formData.observaciones || ""}
+                            onChange={handleChange}
+                            placeholder="Observaciones"
+                        />
+                    </div>
+
+                    <div className={styles.submitButtonContainer}>
+                        <button
+                            className={styles.submitButton}
+                            type="submit"
+                        >
+                            ✓ Guardar Cambios
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

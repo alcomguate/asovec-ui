@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { inmuebleService } from "../services/inmuebleService";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { toast } from 'react-toastify'; // Importa los estilos de Bootstrap
+import { toast } from 'react-toastify';
 import styles from "../styles/InmuebleForm.module.css";
 
 const Create = () => {
@@ -10,7 +10,8 @@ const Create = () => {
     manzana: "",
     lote: "",
     direccion: "",
-    nombreTitular: ""
+    nombreTitular: "",
+    nit: ""
   });
 
   const navigate = useNavigate();
@@ -41,88 +42,99 @@ const Create = () => {
         <h3 className={styles.formTitle}>
           ➕ Crear Nuevo Inmueble
         </h3>
+        <p className={styles.formSubtitle}>Complete el formulario para registrar una nueva propiedad</p>
       </div>
 
       <form onSubmit={handleSubmit} className={styles.formCard}>
-        <div className="mb-4">
-          <label
-            htmlFor="manzanaInput"
-            className={styles.formLabel}
-          >
-            Manzana
-          </label>
-          <input
-            id="manzanaInput"
-            className={`form-control ${styles.formInput}`}
-            type="text"
-            name="manzana"
-            value={formData.manzana}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <div className={styles.formGrid}>
+          <div className={styles.formGroup}>
+            <label htmlFor="manzanaInput" className={styles.formLabel}>
+              Manzana
+            </label>
+            <input
+              id="manzanaInput"
+              className={styles.formInput}
+              type="text"
+              name="manzana"
+              value={formData.manzana}
+              onChange={handleChange}
+              required
+              placeholder="Ej. A"
+            />
+          </div>
 
-        <div className="mb-4">
-          <label
-            htmlFor="loteInput"
-            className={styles.formLabel}
-          >
-            Lote
-          </label>
-          <input
-            id="loteInput"
-            className={`form-control ${styles.formInput}`}
-            type="text"
-            name="lote"
-            value={formData.lote}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="loteInput" className={styles.formLabel}>
+              Lote
+            </label>
+            <input
+              id="loteInput"
+              className={styles.formInput}
+              type="text"
+              name="lote"
+              value={formData.lote}
+              onChange={handleChange}
+              required
+              placeholder="Ej. 10"
+            />
+          </div>
 
-        <div className="mb-4">
-          <label
-            htmlFor="direccionInput"
-            className={styles.formLabel}
-          >
-            Dirección
-          </label>
-          <input
-            id="direccionInput"
-            className={`form-control ${styles.formInput}`}
-            type="text"
-            name="direccion"
-            value={formData.direccion}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+            <label htmlFor="direccionInput" className={styles.formLabel}>
+              Dirección
+            </label>
+            <input
+              id="direccionInput"
+              className={styles.formInput}
+              type="text"
+              name="direccion"
+              value={formData.direccion}
+              onChange={handleChange}
+              required
+              placeholder="Dirección completa"
+            />
+          </div>
 
-        <div className="mb-4">
-          <label
-            htmlFor="nombreTitularInput"
-            className={styles.formLabel}
-          >
-            Titular
-          </label>
-          <input
-            id="nombreTitularInput"
-            className={`form-control ${styles.formInput}`}
-            type="text"
-            name="nombreTitular"
-            value={formData.nombreTitular}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="nombreTitularInput" className={styles.formLabel}>
+              Titular
+            </label>
+            <input
+              id="nombreTitularInput"
+              className={styles.formInput}
+              type="text"
+              name="nombreTitular"
+              value={formData.nombreTitular}
+              onChange={handleChange}
+              required
+              placeholder="Nombre del propietario"
+            />
+          </div>
 
-        <div className={styles.submitButtonContainer}>
-          <button
-            className={`btn btn-primary w-100 ${styles.submitButton}`}
-            type="submit"
-          >
-            ➕ Crear Inmueble
-          </button>
+          <div className={styles.formGroup}>
+            <label htmlFor="nitInput" className={styles.formLabel}>
+              NIT
+            </label>
+            <input
+              id="nitInput"
+              className={styles.formInput}
+              type="text"
+              name="nit"
+              value={formData.nit || ""}
+              onChange={handleChange}
+              required
+              placeholder="Número de NIT"
+            />
+          </div>
+
+          <div className={styles.submitButtonContainer}>
+            <button
+              className={styles.submitButton}
+              type="submit"
+            >
+              ➕ Crear Inmueble
+            </button>
+          </div>
         </div>
       </form>
     </div>

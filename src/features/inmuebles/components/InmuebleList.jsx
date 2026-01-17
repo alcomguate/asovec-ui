@@ -5,7 +5,7 @@ import { BsHouse, BsPencilSquare, BsTrash, BsCashStack } from "react-icons/bs";
 import styles from "../styles/InmuebleList.module.css";
 import HistorialPagosModal from "../../pagos/components/HistorialPagosModal";
 
-const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
+const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm, onRefresh }) => {
 
     const [selectedId, setSelectedId] = useState(null);
     const [selectedInmuebleForPagos, setSelectedInmuebleForPagos] = useState(null);
@@ -30,7 +30,7 @@ const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
     const handleCloseModalUpdate = () => {
         setSelectedId(null);
         setShowModalUpdate(false);
-        //fetchInmueblesByManzana();
+        if (onRefresh) onRefresh();
     };
 
     // Create a descriptive heading
@@ -66,6 +66,7 @@ const FilteredInmuebleList = ({ inmuebles, selectedManzana, searchTerm }) => {
                 show={showModalUpdate}
                 onClose={handleCloseModalUpdate}
                 title="Editar"
+                size="lg"
             >
                 <UpdateInmueble id={selectedId} onClose={handleCloseModalUpdate} />
             </ModalComponent>

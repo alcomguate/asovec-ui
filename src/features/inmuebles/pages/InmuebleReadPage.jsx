@@ -91,7 +91,8 @@ const Read = () => {
             <ModalComponent
                 show={showModalCreate}
                 onClose={handleCloseModalCreate}
-                title="Nuevo registro">
+                title="Nuevo registro"
+                size="lg">
                 <CreateInmueble />
             </ModalComponent>
 
@@ -99,6 +100,7 @@ const Read = () => {
                 inmuebles={filteredInmuebles}
                 selectedManzana={selectedManzana}
                 searchTerm={searchTerm}
+                onRefresh={refreshInmuebles}
             />
 
         </div>
